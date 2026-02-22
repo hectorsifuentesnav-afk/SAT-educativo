@@ -112,7 +112,7 @@ if st.button("Generar y analizar señal", type="primary"):
 
             source = "doppler"
 
-        resultado = procesar_señal(
+        st.session_state.resultado = procesar_señal(
             source,
             t,
             accel,
@@ -147,10 +147,13 @@ if st.button("Generar y analizar señal", type="primary"):
 
         st.pyplot(fig)
 
-st.subheader("Interpretación del resultado")
-
-explicacion = explicar_resultado(resultado, st.session_state.cfg)
-st.info(explicacion)
+if "resultado" in st.session_state:
+    st.subheader("Interpretación del resultado")
+    explicacion = explicar_resultado(
+        st.session_state.resultado,
+        st.session_state.cfg
+    )
+    st.info(explicacion)
 
 
 # ---------------- PIE DE PÁGINA ----------------
