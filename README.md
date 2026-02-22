@@ -93,7 +93,9 @@ La aceleración crítica se obtiene mediante:
 
 
 
+
 Umbrales educativos utilizados:
+
 
 Aceleración	Clasificación
 Sismo leve
