@@ -2,6 +2,7 @@ import numpy as np
 import scipy.signal as signal
 from scipy.stats import kurtosis
 import matplotlib.pyplot as plt
+from datetime import datetime
 
 # ---------------- CONFIGURACIÓN POR DEFECTO ----------------
 DEFAULT_CFG = {
@@ -219,3 +220,31 @@ def crear_figura(t, accel_raw, accel_filt, fs, p_time, dom_freq, alert):
     fig.suptitle(f"Alerta: {alert}")
     return fig
 
+def generar_evidencia_texto(resultado, cfg):
+    lineas = []
+
+    lineas.append("SISTEMA DE ALERTA TEMPRANA - EVIDENCIA DE ANÁLISIS")
+    lineas.append("-" * 50)
+    lineas.append(f"Fecha y hora: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+    lineas.append("")
+
+    lineas.append("PARÁMETROS DEL SISTEMA")
+    for k, v in cfg.items():
+        lineas.append(f"- {k}: {v}")
+
+    lineas.append("")
+    lineas.append("RESULTADOS DEL ANÁLISIS")
+    lineas.append(f"- Tipo de alerta: {resultado['alert_type']}")
+
+    if resultado["p_time"] is not None:
+        lineas.append(f"- Tiempo de llegada P: {resultado['p_time']:.2f} s")
+        lineas.append(f"- Frecuencia dominante: {resultado['dom_freq']:.2f} Hz")
+        lineas.append(f"- Magnitud estimada: {resultado['magnitude']:.2f}")
+    else:
+        lineas.append("- No se detectó un evento sísmico significativo.")
+
+    lineas.append("")
+    lineas.append("INTERPRETACIÓN AUTOMÁTICA")
+    lineas.append(explicar_resultado(resultado, cfg))
+
+    return "\n".join(lineas)

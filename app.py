@@ -16,6 +16,17 @@ from sat_core import (
 
 from sat_core import DEFAULT_CFG
 
+from sat_core import (
+    generar_sintetica,
+    generar_doppler,
+    procesar_señal,
+    crear_figura,
+    explicar_resultado,
+    generar_evidencia_texto,
+    DEFAULT_CFG
+)
+
+
 if "cfg" not in st.session_state:
     st.session_state.cfg = DEFAULT_CFG.copy()
 
@@ -152,6 +163,19 @@ if "resultado" in st.session_state:
     explicacion = explicar_resultado(resultado, st.session_state.cfg)
     st.info(explicacion)
 
+    st.subheader("Evidencia descargable")
+
+    texto_evidencia = generar_evidencia_texto(
+        st.session_state.resultado,
+        st.session_state.cfg
+    )
+
+    st.download_button(
+        label="Descargar evidencia del análisis",
+        data=texto_evidencia,
+        file_name="evidencia_SAT.txt",
+        mime="text/plain"
+    )
 
 # ---------------- PIE DE PÁGINA ----------------
 st.divider()
