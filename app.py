@@ -29,27 +29,41 @@ modo = st.radio(
 
 st.divider()
 
+st.subheader("Parámetros del modelo")
+
+colA, colB = st.columns(2)
+
+with colA:
+    snr = st.slider("Relación señal/ruido (SNR)", 2, 20, 8)
+    duracion = st.slider("Duración de la señal (s)", 60, 180, 120)
+
+with colB:
+    if modo == "Modo Doppler":
+        v_rel = st.slider("Velocidad relativa de la fuente (m/s)", 0, 60, 30)
+    else:
+        v_rel = None
+
 # ---------------- BOTÓN PRINCIPAL ----------------
 if st.button("Generar y analizar señal", type="primary"):
 
     with st.spinner("Procesando señal..."):
         if modo == "Señal sintética sísmica":
             t, accel, fs = generar_sintetica(
-                duration=120.0,
+                duration=duracion,
                 fs=100.0,
-                snr_db=8.0
+                snr_db=snr
             )
             source = "sintetica"
 
         else:
             t, accel, fs = generar_doppler(
-                duration=120.0,
+                duration=duracion,
                 fs=100.0,
                 f0=0.8,
-                v_rel=30.0,
+                v_rel=v_rel,
                 c=300.0,
                 amp=0.02 * 9.81,
-                snr_db=8.0
+                snr_db=snr
             )
             source = "doppler"
 
