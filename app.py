@@ -87,16 +87,13 @@ if st.sidebar.button("Restaurar valores por defecto"):
 
 # ---------------- BOTÓN PRINCIPAL ----------------
 if st.button("Generar y analizar señal", type="primary"):
-
-    with st.spinner("Procesando señal..."):
-        if modo == "Señal sintética sísmica":
-            t, accel, fs = generar_sintetica(
-                duration=duracion,
-                fs=100.0,
-                snr_db=snr,
-                cfg=st.session_state.cfg
-            )
-
+    st.session_state.resultado = procesar_señal(
+        source,
+        t,
+        accel,
+        fs,
+        st.session_state.cfg
+    )
             source = "sintetica"
 
         else:
@@ -148,11 +145,22 @@ if st.button("Generar y analizar señal", type="primary"):
         st.pyplot(fig)
 
 if "resultado" in st.session_state:
+    resultado = st.session_state.resultado
+
+    st.subheader("Resultados")
+
+    if resultado["alert_type"] == "no_detectado":
+        st.warning("No se detectó un evento sísmico significativo.")
+    else:
+        st.success(f"Tipo de alerta detectada: **{resultado['alert_type']}**")
+
+    # Mostrar gráfica
+    fig = crear_figura(t, resultado["accel_filt"])
+    st.pyplot(fig)
+
+    # Interpretación pedagógica
     st.subheader("Interpretación del resultado")
-    explicacion = explicar_resultado(
-        st.session_state.resultado,
-        st.session_state.cfg
-    )
+    explicacion = explicar_resultado(resultado, st.session_state.cfg)
     st.info(explicacion)
 
 
