@@ -33,6 +33,25 @@ def generar_sintetica(duration=120.0, fs=100.0, snr_db=10.0, cfg=None):
         phase = np.random.uniform(0, 2*np.pi)
         señal += amp * np.sin(2*np.pi*f*t + phase) * np.exp(-damping * t)
 
+    # pulsos tipo P
+    for _ in range(random.randint(*n_pulsos_range)):
+        p_time = random.uniform(5.0, max(5.0, duration - 5.0))
+        p_idx = int(p_time * fs)
+        pulse_len = max(1, int(random.uniform(0.2, 1.0) * fs))
+        amp = random.uniform(0.01, pulse_max_amp_g) * G_local
+        window = signal.windows.tukey(pulse_len, alpha=random.uniform(0.2,0.8))
+        end = min(len(t), p_idx + pulse_len)
+        if end > p_idx:
+            señal[p_idx:end] += amp * window[:end-p_idx]
+
+    # picos transitorios aleatorios
+    if random.random() < 0.5:
+        for _ in range(random.randint(0,3)):
+            idx = random.randint(0, len(t)-1)
+            l = min(len(t)-idx, int(random.uniform(1, 0.2*fs)))
+            if l > 0:
+                señal[idx:idx+l] += (random.uniform(0.002, 0.02) * G_local) * signal.windows.hann(l)
+
     rms_signal = np.sqrt(np.mean(señal**2)) + 1e-12
     snr_linear = 10**(snr_db/20.0)
     ruido = np.random.normal(0.0, rms_signal/snr_linear, size=señal.shape)
