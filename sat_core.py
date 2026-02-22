@@ -69,13 +69,14 @@ def filtro_pasabajos(accel, fs, cfg):
     return signal.filtfilt(b, a, accel)
 
 # ---------------- STA/LTA ----------------
-def sta_lta(accel, fs):
-    nsta = int(STA_WINDOW * fs)
-    nlta = int(LTA_WINDOW * fs)
+def sta_lta(accel, fs, cfg):
+    nsta = int(cfg["STA_WINDOW"] * fs)
+    nlta = int(cfg["LTA_WINDOW"] * fs)
     sq = accel**2
     sta = np.convolve(sq, np.ones(nsta)/nsta, mode='same')
     lta = np.convolve(sq, np.ones(nlta)/nlta, mode='same')
     return sta / (lta + 1e-12)
+
 
 def detectar_p(ratio, t):
     idx = np.argmax(ratio > STA_LTA_THRESHOLD)
@@ -109,7 +110,7 @@ def clasificar_alerta(pga_g, mag, period):
 # ---------------- PROCESAMIENTO ----------------
 def procesar_señal(source, t, accel, fs, cfg):
     accel_f = filtro_pasabajos(accel, fs, cfg)
-    ratio = sta_lta(accel_f, fs)
+    ratio = sta_lta(accel_f, fs, cfg)
     p_time, p_idx = detectar_p(ratio, t)
 
     if p_time is None:

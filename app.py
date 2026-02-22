@@ -75,7 +75,7 @@ cfg["FILTER_FC"] = st.sidebar.number_input(
 
 if st.sidebar.button("Restaurar valores por defecto"):
     st.session_state.cfg = DEFAULT_CFG.copy()
-    st.experimental_rerun()
+    st.rerun()
 
 # ---------------- BOTÓN PRINCIPAL ----------------
 if st.button("Generar y analizar señal", type="primary"):
