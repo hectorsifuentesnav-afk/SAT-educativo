@@ -111,7 +111,7 @@ if st.button("Generar y analizar señal", type="primary"):
             )
             source = "doppler"
 
-        # AHORA sí: procesar la señal generada
+        # procesar la señal generada
         st.session_state.resultado = procesar_señal(
             source,
             t,
@@ -120,14 +120,14 @@ if st.button("Generar y analizar señal", type="primary"):
             st.session_state.cfg
         )
 
-        # Guardar también la señal para la gráfica
+        # Guardar la señal para la gráfica
         st.session_state.t = t
         st.session_state.accel = accel
 
 
 # ---------------- RESULTADOS ----------------
 
-    if resultado["alert_type"] == "no_detectado":
+    if "resultado" in st.session_state:
         st.warning("No se detectó un evento sísmico significativo.")
     else:
         st.success(f"Tipo de alerta detectada: **{resultado['alert_type'].upper()}**")
