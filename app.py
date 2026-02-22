@@ -5,6 +5,14 @@ from sat_core import (
     procesar_señal,
     crear_figura
 )
+from sat_core import (
+    generar_sintetica,
+    generar_doppler,
+    procesar_señal,
+    crear_figura,
+    explicar_resultado,
+    DEFAULT_CFG
+)
 
 from sat_core import DEFAULT_CFG
 
@@ -138,6 +146,12 @@ if st.button("Generar y analizar señal", type="primary"):
         )
 
         st.pyplot(fig)
+
+st.subheader("Interpretación del resultado")
+
+explicacion = explicar_resultado(resultado, st.session_state.cfg)
+st.info(explicacion)
+
 
 # ---------------- PIE DE PÁGINA ----------------
 st.divider()

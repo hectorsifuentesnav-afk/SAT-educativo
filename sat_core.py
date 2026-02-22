@@ -108,6 +108,46 @@ def clasificar_alerta(pga_g, mag, period, cfg):
         return "tsunami"
     return "sismica"
 
+def explicar_resultado(resultado, cfg):
+    if resultado["alert_type"] == "no_detectado":
+        return (
+            "No se detectó un evento sísmico significativo. "
+            "Esto puede deberse a una baja amplitud de la señal o a un nivel alto de ruido, "
+            "lo que impide que el algoritmo STA/LTA supere el umbral configurado."
+        )
+
+    texto = []
+
+    texto.append(
+        f"Se detectó un evento con una aceleración pico (PGA) de "
+        f"{resultado['pga_g']:.4f} g."
+    )
+
+    if resultado["pga_g"] < cfg["PGA_THRESHOLD_G"]:
+        texto.append(
+            "La aceleración es baja, por lo que el sistema clasifica el evento como ruido."
+        )
+    else:
+        texto.append(
+            "La aceleración supera el umbral configurado, indicando un evento sísmico real."
+        )
+
+    texto.append(
+        f"El periodo dominante de la señal es de {resultado['dom_period']:.2f} s, "
+        "lo cual está relacionado con la frecuencia principal del movimiento del suelo."
+    )
+
+    if resultado["alert_type"] == "tsunami":
+        texto.append(
+            "Debido a la combinación de alta magnitud y periodo largo, "
+            "el sistema identifica un posible escenario de tsunami."
+        )
+    else:
+        texto.append(
+            "El periodo dominante no corresponde a un escenario típico de tsunami."
+        )
+
+    return " ".join(texto)
 
 # ---------------- PROCESAMIENTO ----------------
 def procesar_señal(source, t, accel, fs, cfg):
