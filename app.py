@@ -6,6 +6,12 @@ from sat_core import (
     crear_figura
 )
 
+from sat_core import DEFAULT_CFG
+
+if "cfg" not in st.session_state:
+    st.session_state.cfg = DEFAULT_CFG.copy()
+
+
 # ---------------- CONFIGURACIÓN DE LA PÁGINA ----------------
 st.set_page_config(
     page_title="SAT Educativo – UNIR",
@@ -43,6 +49,34 @@ with colB:
     else:
         v_rel = None
 
+st.sidebar.header("Parámetros del modelo")
+
+cfg = st.session_state.cfg
+
+cfg["STA_WINDOW"] = st.sidebar.number_input(
+    "Ventana STA (s)", value=cfg["STA_WINDOW"], min_value=0.1
+)
+
+cfg["LTA_WINDOW"] = st.sidebar.number_input(
+    "Ventana LTA (s)", value=cfg["LTA_WINDOW"], min_value=1.0
+)
+
+cfg["STA_LTA_THRESHOLD"] = st.sidebar.number_input(
+    "Umbral STA/LTA", value=cfg["STA_LTA_THRESHOLD"]
+)
+
+cfg["PGA_THRESHOLD_G"] = st.sidebar.number_input(
+    "Umbral PGA (g)", value=cfg["PGA_THRESHOLD_G"]
+)
+
+cfg["FILTER_FC"] = st.sidebar.number_input(
+    "Frecuencia de corte del filtro (Hz)", value=cfg["FILTER_FC"]
+)
+
+if st.sidebar.button("Restaurar valores por defecto"):
+    st.session_state.cfg = DEFAULT_CFG.copy()
+    st.experimental_rerun()
+
 # ---------------- BOTÓN PRINCIPAL ----------------
 if st.button("Generar y analizar señal", type="primary"):
 
@@ -67,9 +101,16 @@ if st.button("Generar y analizar señal", type="primary"):
             )
             source = "doppler"
 
-        resultado = procesar_señal(source, t, accel, fs)
+        resultado = procesar_señal(
+            source,
+            t,
+            accel,
+            fs,
+            cfg=st.session_state.cfg
+        )
 
     # ---------------- RESULTADOS ----------------
+
     if resultado["alert_type"] == "no_detectado":
         st.warning("No se detectó un evento sísmico significativo.")
     else:
