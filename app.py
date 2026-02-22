@@ -132,16 +132,16 @@ if "resultado" in st.session_state:
 
     st.subheader("Resultados")
 
-fig = crear_figura(
-    st.session_state.t,
-    st.session_state.accel,
-    resultado["accel_filt"],
-    st.session_state.cfg["SAMPLE_RATE"],
-    resultado["p_time"],
-    resultado["dom_freq"],
-    resultado["alert_type"]
-)
-st.pyplot(fig)
+    fig = crear_figura(
+        t,
+        st.session_state.accel,
+        resultado["accel_filt"],
+        st.session_state.cfg["SAMPLE_RATE"],
+        resultado["p_time"],
+        resultado["dom_freq"],
+        resultado["alert_type"]
+    )
+    st.pyplot(fig)
 
     if resultado["alert_type"] == "no_detectado":
         st.warning("No se detectó un evento sísmico significativo.")
@@ -151,7 +151,6 @@ st.pyplot(fig)
     st.subheader("Interpretación del resultado")
     explicacion = explicar_resultado(resultado, st.session_state.cfg)
     st.info(explicacion)
-
 
 
 # ---------------- PIE DE PÁGINA ----------------
