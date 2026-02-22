@@ -65,3 +65,14 @@ Activación según umbrales críticos
 Cierre y reflexión didáctica
 
 El uso de herramientas tecnológicas no reemplaza el razonamiento científico, sino que lo potencia analizando situaciones complejas.
+
+
+Proyecto desarrollado por:
+
+Magdiel Genaro Castellón Espinoza
+
+Héctor Fidel Sifuentes Nava
+
+Irma Lucero Quintanilla Grandez
+
+Pablo Alejandro Ku Gómez
