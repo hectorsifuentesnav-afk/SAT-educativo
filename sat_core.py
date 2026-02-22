@@ -156,10 +156,10 @@ def procesar_señal(source, t, accel, fs, cfg):
     p_time, p_idx = detectar_p(ratio, t, cfg)
 
     if p_time is None:
-    return {
+        return {
         "alert_type": "no_detectado",
         "accel_filt": accel_f
-    }
+        }
 
     segmento = accel_f[p_idx:p_idx + int(10*fs)]
     pga = calcular_pga(segmento)
