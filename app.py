@@ -126,39 +126,24 @@ if st.button("Generar y analizar señal", type="primary"):
 
 
 # ---------------- RESULTADOS ----------------
+if "resultado" in st.session_state:
+    resultado = st.session_state.resultado
+    t = st.session_state.t
 
-    if "resultado" in st.session_state:
+    st.subheader("Resultados")
+
+    fig = crear_figura(t, resultado["accel_filt"])
+    st.pyplot(fig)
+
+    if resultado["alert_type"] == "no_detectado":
         st.warning("No se detectó un evento sísmico significativo.")
     else:
-        st.success(f"Tipo de alerta detectada: **{resultado['alert_type'].upper()}**")
+        st.success(f"Tipo de alerta detectada: **{resultado['alert_type']}**")
 
-        col1, col2, col3 = st.columns(3)
-
-        col1.metric("PGA (g)", f"{resultado['pga_g']:.4f}")
-        col2.metric("Magnitud estimada", resultado["magnitude"])
-        col3.metric("Periodo dominante (s)", f"{resultado['dom_period']:.2f}")
-
-        st.divider()
-
-        fig = crear_figura(
-            t,
-            accel,
-            resultado["accel_filt"],
-            fs,
-            resultado["p_time"],
-            resultado["dom_freq"],
-            resultado["alert_type"]
-        )
-
-        st.pyplot(fig)
-
-if "resultado" in st.session_state:
     st.subheader("Interpretación del resultado")
-    explicacion = explicar_resultado(
-        st.session_state.resultado,
-        st.session_state.cfg
-    )
+    explicacion = explicar_resultado(resultado, st.session_state.cfg)
     st.info(explicacion)
+
 
 
 # ---------------- PIE DE PÁGINA ----------------
