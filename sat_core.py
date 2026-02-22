@@ -112,7 +112,7 @@ def clasificar_alerta(pga_g, mag, period):
 def procesar_señal(source, t, accel, fs, cfg):
     accel_f = filtro_pasabajos(accel, fs, cfg)
     ratio = sta_lta(accel_f, fs, cfg)
-p_time, p_idx = detectar_p(ratio, t, cfg)
+    p_time, p_idx = detectar_p(ratio, t, cfg)
 
 
     if p_time is None:
