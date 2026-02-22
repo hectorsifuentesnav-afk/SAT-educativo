@@ -27,7 +27,7 @@ def generar_sintetica(duration=120.0, fs=100.0, snr_db=10.0, cfg=None):
     señal = np.zeros_like(t)
 
     for _ in range(np.random.randint(1, 4)):
-        f = 10**np.random.uniform(np.log10(0.2), np.log10(8.0)) a
+        f = 10**np.random.uniform(np.log10(0.2), np.log10(8.0)) 
         amp = 10**np.random.uniform(np.log10(0.0005), np.log10(0.01)) * G
         damping = np.random.uniform(0.0002, 0.005)
         phase = np.random.uniform(0, 2*np.pi)
