@@ -10,13 +10,13 @@ El proyecto se fundamenta en la necesidad de acercar a los estudiantes a fenóme
 
 
 
-OBJETIVO GENERAL
+**OBJETIVO GENERAL**
 
 Validar un Modelo Computacional de Sistema de Alerta Temprana (SAT) que integre la Didáctica STEM en la enseñanza de la prevención y mitigación de sismos y tsunamis con estudiantes de la carrera de Física–Matemática del CUR Estelí.
 
 
 
-OBJETIVOS ESPECÍFICOS
+**OBJETIVOS ESPECÍFICOS**
 
 Analizar fundamentos teóricos del movimiento ondulatorio y el efecto Doppler aplicados a sismos y tsunamis.
 
@@ -28,13 +28,13 @@ Presentar el modelo ante autoridades y estudiantes para su validación académic
 
 
 
-FUNDAMENTACIÓN STEM
+**FUNDAMENTACIÓN STEM**
 
 La Didáctica STEM promueve la integración articulada de la Ciencia, la Tecnología, la Ingeniería y la Matemática favoreciendo un aprendizaje significativo y contextualizado.
 
 
 
-COMPONENTES CLAVES
+**COMPONENTES CLAVES**
 
 Ciencia: estudio de ondas sísmicas, energía, magnitud, intensidad.
 
@@ -46,7 +46,7 @@ Matemáticas: ecuaciones diferenciales, modelos de ondas, análisis de señales.
 
 
 
-MODELO COMPUTACIONAL
+**MODELO COMPUTACIONAL**
 
 El modelo computacional integra los modelos físico y matemático mediante Python.
 
