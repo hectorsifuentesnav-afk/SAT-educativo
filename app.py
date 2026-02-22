@@ -97,9 +97,10 @@ if st.button("Generar y analizar señal", type="primary"):
                 f0=0.8,
                 v_rel=v_rel,
                 c=300.0,
-                amp=0.02 * 9.81,
-                snr_db=snr
+                snr_db=snr,
+                cfg=st.session_state.cfg
             )
+
             source = "doppler"
 
         resultado = procesar_señal(

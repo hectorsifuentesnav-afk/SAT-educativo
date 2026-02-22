@@ -19,13 +19,14 @@ DEFAULT_CFG = {
 
 # ---------------- SEÑAL SINTÉTICA ----------------
 def generar_sintetica(duration=120.0, fs=100.0, snr_db=10.0, cfg=None):
-    if cfg is None:
-        cfg = DEFAULT_CFG G = cfg["G"]
+    if cfg is None: cfg = DEFAULT_CFG
+
+    G = cfg["G"]
     t = np.arange(0.0, duration, 1.0/fs)
     señal = np.zeros_like(t)
 
     for _ in range(np.random.randint(1, 4)):
-        f = 10**np.random.uniform(np.log10(0.2), np.log10(8.0))
+        f = 10**np.random.uniform(np.log10(0.2), np.log10(8.0)) a
         amp = 10**np.random.uniform(np.log10(0.0005), np.log10(0.01)) * G
         damping = np.random.uniform(0.0002, 0.005)
         phase = np.random.uniform(0, 2*np.pi)
@@ -33,14 +34,15 @@ def generar_sintetica(duration=120.0, fs=100.0, snr_db=10.0, cfg=None):
 
     rms_signal = np.sqrt(np.mean(señal**2)) + 1e-12
     snr_linear = 10**(snr_db/20.0)
-    ruido = np.random.normal(0.0, rms_signal/snr_linear, size=señal.shape)
-
-    return t, señal + ruido, fs
+    ruido = np.random.normal(0.0, rms_signal/snr_linear, size=señal.shape) return t, señal + ruido, fs
 
 # ---------------- MODO DOPPLER ----------------
-def generar_doppler(duration=120.0, fs=100.0, f0=0.8, v_rel=30.0, c=300.0, amp=None, snr_db=8.0):
+def generar_doppler(duration=120.0, fs=100.0, f0=0.8, v_rel=30.0, c=300.0, amp=None, snr_db=8.0, cfg=None):
+    if cfg is None:
+        cfg = DEFAULT_CFG
     if amp is None:
-        amp = 0.02 * G
+        amp = 0.02 * cfg["G"]
+
     t = np.arange(0.0, duration, 1.0/fs)
     v_t = np.linspace(-v_rel, v_rel, len(t))
     v_t = np.clip(v_t, -0.9*c, 0.9*c)
@@ -54,6 +56,7 @@ def generar_doppler(duration=120.0, fs=100.0, f0=0.8, v_rel=30.0, c=300.0, amp=N
     ruido = np.random.normal(0.0, rms_signal/snr_linear, size=señal.shape)
 
     return t, señal + ruido, fs
+
 
 # ---------------- FILTRO ----------------
 def filtro_pasabajos(accel, fs, cfg):
