@@ -36,7 +36,9 @@ def generar_sintetica(duration=120.0, fs=100.0, snr_db=10.0):
     return t, señal + ruido, fs
 
 # ---------------- MODO DOPPLER ----------------
-def generar_doppler(duration=120.0, fs=100.0, f0=0.8, v_rel=30.0, c=300.0, amp=0.02*G, snr_db=8.0):
+def generar_doppler(duration=120.0, fs=100.0, f0=0.8, v_rel=30.0, c=300.0, amp=None, snr_db=8.0):
+    if amp is None:
+        amp = 0.02 * G
     t = np.arange(0.0, duration, 1.0/fs)
     v_t = np.linspace(-v_rel, v_rel, len(t))
     v_t = np.clip(v_t, -0.9*c, 0.9*c)
