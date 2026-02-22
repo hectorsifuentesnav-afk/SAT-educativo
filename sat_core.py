@@ -35,7 +35,7 @@ def generar_sintetica(duration=120.0, fs=100.0, snr_db=10.0, cfg=None):
 
     rms_signal = np.sqrt(np.mean(señal**2)) + 1e-12
     snr_linear = 10**(snr_db/20.0)
-    ruido = np.random.normal(0.0, rms_signal/snr_linear, size=señal.shape) return t, señal + ruido, fs
+    ruido = np.random.normal(0.0, rms_signal/snr_linear, size=señal.shape)
 
     return t, señal + ruido, fs
 
