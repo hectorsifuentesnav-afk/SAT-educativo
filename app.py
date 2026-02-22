@@ -86,7 +86,8 @@ if st.button("Generar y analizar señal", type="primary"):
                 duration=duracion,
                 fs=100.0,
                 snr_db=snr,
-                cfg=st.session_state.cfg )
+                cfg=st.session_state.cfg
+            )
             source = "sintetica"
 
         else:
