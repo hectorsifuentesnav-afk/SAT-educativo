@@ -114,13 +114,12 @@ def procesar_señal(source, t, accel, fs, cfg):
     ratio = sta_lta(accel_f, fs, cfg)
     p_time, p_idx = detectar_p(ratio, t, cfg)
 
-
     if p_time is None:
         return {"alert_type": "no_detectado"}
 
     segmento = accel_f[p_idx:p_idx + int(10*fs)]
     pga = calcular_pga(segmento)
-    pga_g = pga / G
+    pga_g = pga / cfg["G"]
     dom_f, dom_p = frecuencia_dominante(segmento, fs)
     mag = estimar_magnitud(pga)
     alert = clasificar_alerta(pga_g, mag, dom_p)
