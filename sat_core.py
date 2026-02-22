@@ -18,7 +18,9 @@ DEFAULT_CFG = {
 
 
 # ---------------- SEÑAL SINTÉTICA ----------------
-def generar_sintetica(duration=120.0, fs=100.0, snr_db=10.0):
+def generar_sintetica(duration=120.0, fs=100.0, snr_db=10.0, cfg=None):
+    if cfg is None:
+        cfg = DEFAULT_CFG G = cfg["G"]
     t = np.arange(0.0, duration, 1.0/fs)
     señal = np.zeros_like(t)
 
