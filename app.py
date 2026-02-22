@@ -94,7 +94,7 @@ if st.button("Generar y analizar señal", type="primary"):
         fs,
         st.session_state.cfg
     )
-            source = "sintetica"
+    source = "sintetica"
 
         else:
             t, accel, fs = generar_doppler(
