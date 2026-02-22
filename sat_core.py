@@ -198,7 +198,7 @@ def crear_figura(t, accel_raw, accel_filt, fs, p_time, dom_freq, alert):
     fft = np.abs(np.fft.rfft(accel_filt * np.hanning(n)))
     ax[1].semilogy(freqs, fft)
     if dom_freq is not None:
-    ax[1].axvline(dom_freq, color="r", linestyle="--", label="Frecuencia dominante")
+        ax[1].axvline(dom_freq, color="r", linestyle="--", label="Frecuencia dominante")
     ax[1].grid()
     ax[1].legend()
 
