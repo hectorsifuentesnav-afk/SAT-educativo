@@ -188,7 +188,8 @@ def crear_figura(t, accel_raw, accel_filt, fs, p_time, dom_freq, alert):
 
     ax[0].plot(t, accel_raw, label="Raw", alpha=0.5)
     ax[0].plot(t, accel_filt, label="Filtrada")
-    ax[0].axvline(p_time, color="r", linestyle="--")
+    if p_time is not None:
+        ax[0].axvline(p_time, color="r", linestyle="--", label="Llegada P")
     ax[0].legend()
     ax[0].grid()
 
