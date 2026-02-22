@@ -77,12 +77,13 @@ def sta_lta(accel, fs, cfg):
     lta = np.convolve(sq, np.ones(nlta)/nlta, mode='same')
     return sta / (lta + 1e-12)
 
-
-def detectar_p(ratio, t):
-    idx = np.argmax(ratio > STA_LTA_THRESHOLD)
-    if ratio[idx] > STA_LTA_THRESHOLD:
+def detectar_p(ratio, t, cfg):
+    threshold = cfg["STA_LTA_THRESHOLD"]
+    idx = np.argmax(ratio > threshold)
+    if ratio[idx] > threshold:
         return t[idx], idx
     return None, None
+
 
 # ---------------- PARÁMETROS SÍSMICOS ----------------
 def calcular_pga(accel):
@@ -111,7 +112,8 @@ def clasificar_alerta(pga_g, mag, period):
 def procesar_señal(source, t, accel, fs, cfg):
     accel_f = filtro_pasabajos(accel, fs, cfg)
     ratio = sta_lta(accel_f, fs, cfg)
-    p_time, p_idx = detectar_p(ratio, t)
+p_time, p_idx = detectar_p(ratio, t, cfg)
+
 
     if p_time is None:
         return {"alert_type": "no_detectado"}
