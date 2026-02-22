@@ -158,9 +158,11 @@ def procesar_señal(source, t, accel, fs, cfg):
     if p_time is None:
         return {
             "alert_type": "no_detectado",
-            "accel_filt": accel_f
+            "accel_filt": accel_f,
+            "p_time": None,
+            "dom_freq": None,
+            "dom_period": None
         }
-
 
     segmento = accel_f[p_idx:p_idx + int(10*fs)]
     pga = calcular_pga(segmento)
@@ -170,14 +172,15 @@ def procesar_señal(source, t, accel, fs, cfg):
     alert = clasificar_alerta(pga_g, mag, dom_p, cfg)
 
     return {
+        "alert_type": alert,
+        "accel_filt": accel_f,
         "p_time": p_time,
-        "pga_g": pga_g,
         "dom_freq": dom_f,
         "dom_period": dom_p,
-        "magnitude": mag,
-        "alert_type": alert,
-        "accel_filt": accel_f
+        "pga_g": pga_g,
+        "magnitude": mag
     }
+
 
 # ---------------- FIGURA ----------------
 def crear_figura(t, accel_raw, accel_filt, fs, p_time, dom_freq, alert):

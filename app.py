@@ -132,16 +132,16 @@ if "resultado" in st.session_state:
 
     st.subheader("Resultados")
 
-def crear_figura(t, accel_filt):
-    fig, ax = plt.subplots(figsize=(10, 4))
-    ax.plot(t, accel_filt, label="Señal filtrada")
-    ax.set_xlabel("Tiempo (s)")
-    ax.set_ylabel("Aceleración (m/s²)")
-    ax.legend()
-    ax.grid(True)
-    return fig
-
-
+fig = crear_figura(
+    st.session_state.t,
+    st.session_state.accel,
+    resultado["accel_filt"],
+    st.session_state.cfg["SAMPLE_RATE"],
+    resultado["p_time"],
+    resultado["dom_freq"],
+    resultado["alert_type"]
+)
+st.pyplot(fig)
 
     if resultado["alert_type"] == "no_detectado":
         st.warning("No se detectó un evento sísmico significativo.")
