@@ -18,13 +18,7 @@ Validar un Modelo Computacional de Sistema de Alerta Temprana (SAT) que integre 
 
 **OBJETIVOS ESPECÍFICOS**
 
-Analizar fundamentos teóricos del movimiento ondulatorio y el efecto Doppler aplicados a sismos y tsunamis.
-
-Diseñar un modelo computacional de SAT utilizando herramientas tecnológicas con enfoque didáctico.
-
-Integrar el modelo en metodologías activas STEM.
-
-Presentar el modelo ante autoridades y estudiantes para su validación académica.
+Analizar fundamentos teóricos del movimiento ondulatorio y el efecto Doppler aplicados a sismos y tsunamis. Diseñar un modelo computacional de SAT utilizando herramientas tecnológicas con enfoque didáctico. Integrar el modelo en metodologías activas STEM. Presentar el modelo ante autoridades y estudiantes para su validación académica.
 
 
 
@@ -36,33 +30,19 @@ La Didáctica STEM promueve la integración articulada de la Ciencia, la Tecnolo
 
 **COMPONENTES CLAVES**
 
-Ciencia: estudio de ondas sísmicas, energía, magnitud, intensidad.
-
-Tecnología: sensores, microcontroladores, comunicación serial.
-
-Ingeniería: diseño del sistema, calibración, pruebas.
-
-Matemáticas: ecuaciones diferenciales, modelos de ondas, análisis de señales.
+Ciencia: estudio de ondas sísmicas, energía, magnitud, intensidad. Tecnología: sensores, microcontroladores, comunicación serial. Ingeniería: diseño del sistema, calibración, pruebas. Matemáticas: ecuaciones diferenciales, modelos de ondas, análisis de señales.
 
 
 
 **MODELO COMPUTACIONAL**
 
-El modelo computacional integra los modelos físico y matemático mediante Python.
-
-Procesamiento y análisis de señal
-
-FFT, curtosis, STA/LTA, umbrales
+El modelo computacional integra los modelos físico y matemático mediante Python. Procesamiento y análisis de señal, FFT, curtosis, STA/LTA, umbrales.
 
 
 
 **Visualización**
 
-Gráficas en tiempo real
-
-Generación de alerta
-
-Activación según umbrales críticos
+Gráficas en tiempo real. Generación de alerta. Activación según umbrales críticos.
 
 
 
