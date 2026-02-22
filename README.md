@@ -54,7 +54,9 @@ Procesamiento y análisis de señal
 
 FFT, curtosis, STA/LTA, umbrales
 
-Visualización
+
+
+**Visualización**
 
 Gráficas en tiempo real
 
@@ -62,12 +64,15 @@ Generación de alerta
 
 Activación según umbrales críticos
 
-Cierre y reflexión didáctica
+
+
+**Cierre y reflexión didáctica**
 
 El uso de herramientas tecnológicas no reemplaza el razonamiento científico, sino que lo potencia analizando situaciones complejas.
 
 
-Proyecto desarrollado por:
+
+**Proyecto desarrollado por:**
 
 Magdiel Genaro Castellón Espinoza
 
