@@ -101,12 +101,13 @@ def estimar_magnitud(pga):
     pga_mm = pga * 1000
     return round(np.log10(pga_mm) + 0.5, 2) if pga_mm > 0 else 0.0
 
-def clasificar_alerta(pga_g, mag, period):
-    if pga_g < PGA_THRESHOLD_G:
+def clasificar_alerta(pga_g, mag, period, cfg):
+    if pga_g < cfg["PGA_THRESHOLD_G"]:
         return "ruido"
-    if mag >= TSUNAMI_MAGNITUDE_THRESHOLD and period >= TSUNAMI_PERIOD_THRESHOLD:
+    if mag >= cfg["TSUNAMI_MAGNITUDE_THRESHOLD"] and period >= cfg["TSUNAMI_PERIOD_THRESHOLD"]:
         return "tsunami"
     return "sismica"
+
 
 # ---------------- PROCESAMIENTO ----------------
 def procesar_señal(source, t, accel, fs, cfg):
@@ -122,7 +123,7 @@ def procesar_señal(source, t, accel, fs, cfg):
     pga_g = pga / cfg["G"]
     dom_f, dom_p = frecuencia_dominante(segmento, fs)
     mag = estimar_magnitud(pga)
-    alert = clasificar_alerta(pga_g, mag, dom_p)
+    alert = clasificar_alerta(pga_g, mag, dom_p, cfg)
 
     return {
         "p_time": p_time,
