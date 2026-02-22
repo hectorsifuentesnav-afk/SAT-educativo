@@ -19,7 +19,8 @@ DEFAULT_CFG = {
 
 # ---------------- SEÑAL SINTÉTICA ----------------
 def generar_sintetica(duration=120.0, fs=100.0, snr_db=10.0, cfg=None):
-    if cfg is None: cfg = DEFAULT_CFG
+    if cfg is None:
+        cfg = DEFAULT_CFG
 
     G = cfg["G"]
     t = np.arange(0.0, duration, 1.0/fs)
@@ -35,6 +36,8 @@ def generar_sintetica(duration=120.0, fs=100.0, snr_db=10.0, cfg=None):
     rms_signal = np.sqrt(np.mean(señal**2)) + 1e-12
     snr_linear = 10**(snr_db/20.0)
     ruido = np.random.normal(0.0, rms_signal/snr_linear, size=señal.shape) return t, señal + ruido, fs
+
+    return t, señal + ruido, fs
 
 # ---------------- MODO DOPPLER ----------------
 def generar_doppler(duration=120.0, fs=100.0, f0=0.8, v_rel=30.0, c=300.0, amp=None, snr_db=8.0, cfg=None):

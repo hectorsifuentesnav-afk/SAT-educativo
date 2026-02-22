@@ -88,6 +88,7 @@ if st.button("Generar y analizar señal", type="primary"):
                 snr_db=snr,
                 cfg=st.session_state.cfg
             )
+
             source = "sintetica"
 
         else:
@@ -111,7 +112,7 @@ if st.button("Generar y analizar señal", type="primary"):
             cfg=st.session_state.cfg
         )
 
-    # ---------------- RESULTADOS ----------------
+# ---------------- RESULTADOS ----------------
 
     if resultado["alert_type"] == "no_detectado":
         st.warning("No se detectó un evento sísmico significativo.")
