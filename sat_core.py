@@ -13,23 +13,57 @@ PGA_THRESHOLD_G = 0.05
 TSUNAMI_MAGNITUDE_THRESHOLD = 7.0
 TSUNAMI_PERIOD_THRESHOLD = 10.0
 
-# ---------------- SEÑAL SINTÉTICA ----------------
-def generar_sintetica(duration=120.0, fs=100.0, snr_db=10.0):
+
+# ---------------- SINTÉTICA ----------------
+def generar_sintetica(duration=120.0, fs=None, snr_db=10.0,
+                      n_modos_range=(1,4), n_pulsos_range=(1,3),
+                      pulse_max_amp_g=0.08):
+    """
+    Genera una señal sintética aleatoria.
+    Devuelve: t (s), accel (m/s^2), fs
+    """
+    if fs is None:
+        fs = float(cfg.get("SAMPLE_RATE", default_config["SAMPLE_RATE"]))
+    G_local = float(cfg.get("G", default_config["G"]))
+
     t = np.arange(0.0, duration, 1.0/fs)
     señal = np.zeros_like(t)
 
-    for _ in range(np.random.randint(1, 4)):
-        f = 10**np.random.uniform(np.log10(0.2), np.log10(8.0))
-        amp = 10**np.random.uniform(np.log10(0.0005), np.log10(0.01)) * G
-        damping = np.random.uniform(0.0002, 0.005)
-        phase = np.random.uniform(0, 2*np.pi)
+    # modos aleatorios
+    for _ in range(random.randint(*n_modos_range)):
+        f = 10**random.uniform(np.log10(0.2), np.log10(8.0))
+        amp = 10**random.uniform(np.log10(0.0005), np.log10(0.01)) * G_local
+        damping = random.uniform(0.0002, 0.005)
+        phase = random.uniform(0, 2*np.pi)
         señal += amp * np.sin(2*np.pi*f*t + phase) * np.exp(-damping * t)
 
-    rms_signal = np.sqrt(np.mean(señal**2)) + 1e-12
-    snr_linear = 10**(snr_db/20.0)
-    ruido = np.random.normal(0.0, rms_signal/snr_linear, size=señal.shape)
+    # pulsos tipo P
+    for _ in range(random.randint(*n_pulsos_range)):
+        p_time = random.uniform(5.0, max(5.0, duration - 5.0))
+        p_idx = int(p_time * fs)
+        pulse_len = max(1, int(random.uniform(0.2, 1.0) * fs))
+        amp = random.uniform(0.01, pulse_max_amp_g) * G_local
+        window = signal.windows.tukey(pulse_len, alpha=random.uniform(0.2,0.8))
+        end = min(len(t), p_idx + pulse_len)
+        if end > p_idx:
+            señal[p_idx:end] += amp * window[:end-p_idx]
 
-    return t, señal + ruido, fs
+    # picos transitorios aleatorios
+    if random.random() < 0.5:
+        for _ in range(random.randint(0,3)):
+            idx = random.randint(0, len(t)-1)
+            l = min(len(t)-idx, int(random.uniform(1, 0.2*fs)))
+            if l > 0:
+                señal[idx:idx+l] += (random.uniform(0.002, 0.02) * G_local) * signal.windows.hann(l)
+
+    # ruido según SNR
+    rms_signal = np.sqrt(np.mean(señal**2)) + 1e-12
+    snr_linear = 10**(snr_db/20.0) if snr_db is not None else 10**(10/20.0)
+    noise_rms = rms_signal / snr_linear
+    ruido = np.random.normal(0.0, noise_rms, size=señal.shape)
+
+    accel = señal + ruido
+    return t, accel, fs
 
 # ---------------- MODO DOPPLER ----------------
 def generar_doppler(duration=120.0, fs=100.0, f0=0.8, v_rel=30.0, c=300.0, amp=0.02*G, snr_db=8.0):
