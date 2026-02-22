@@ -2,7 +2,7 @@
 
 
 
-Proyecto académico – Didáctica STEM | UNAN–Managua – UNIR México
+**Proyecto académico – Didáctica STEM | UNAN–Managua – UNIR México**
 
 Este repositorio contiene el desarrollo del Modelo Computacional Educativo de un Sistema de Alerta Temprana (SAT) orientado a la enseñanza del Movimiento Oscilatorio y Ondulatorio, la prevención de sismos y tsunamis, y la integración de la Didáctica STEM en la formación de docentes de Física–Matemática.
 
